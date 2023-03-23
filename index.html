@@ -138,7 +138,7 @@
         <div class="chat">
           <div class="chat-history" ref="chatHistory">
             <div class="message" v-for="(message, index) in messages" :key="index" :class="{ 'message-left': message.role === 'assistant', 'message-right': message.role === 'user' }">
-              <div class="message-text">{{ message.content }}</div>
+              <div class="message-text" v-html="mark(message.content)"></div>
               <div class="delete-button" @click="deleteMessage(index)">x</div>
             </div>
           </div>
