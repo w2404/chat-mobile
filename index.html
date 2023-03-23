@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>？</title>
+
+    <script src="./config.js"></script>
+    <script src="lib/jquery-3.5.1.min.js"></script>
+    <script src="lib/showdown.min.js"></script>
+    <link rel="stylesheet" href="lib/h/default.min.css" />
+    <script src="lib/vue.global.prod.js"></script>
+    <script src="lib/h/highlight.min.js"></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+        background-color: #f2f2f2;
+        touch-action: manipulation; /* 禁止手机浏览器通过手势放大缩小网页 */
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .chat {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+      }
+
+      .chat-history {
+        height: 300px;
+        overflow-y: scroll;
+      }
+
+      .message {
+        margin: 10px 0;
+        display: flex;
+        align-items: center;
+        position: relative; /* 让删除按钮的定位相对于message元素进行 */
+      }
+
+      .message-left {
+        justify-content: flex-start;
+      }
+
+      .message-right {
+        justify-content: flex-end;
+      }
+
+      .message-text {
+        padding: 10px;
+        background-color: #e6e6e6;
+        border-radius: 10px;
+        display: inline-block;
+      }
+
+      .message-left .message-text {
+        margin-left: 10px;
+      }
+
+      .message-right .message-text {
+        margin-right: 10px;
+      }
+
+      .delete-button {
+        top: 0;
+        width: 20px;
+        height: 100%;
+        background-color: #ff3b30;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .chat-input {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column; /* 将输入框和按钮垂直排列 */
+      }
+
+      .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 10px;
+        border: none;
+        margin-bottom: 10px; /* 在输入框下方添加一定的间距 */
+      }
+
+      .chat-buttons {
+        display: flex;
+        flex-wrap: wrap; /* 将按钮进行换行排列 */
+        justify-content: space-between;
+      }
+
+      .chat-buttons button,
+      .chat-buttons a {
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: none;
+        background-color: #007aff;
+        color: #fff;
+        cursor: pointer;
+        margin-bottom: 10px; /* 在按钮下方添加一定的间距 */
+        text-decoration: none; /* 去除默认的下划线 */
+      }
+
+      .chat-buttons button:hover,
+      .chat-buttons a:hover {
+        background-color: #0047b3;
+      }
+
+      .chat-buttons a.chat-button-help {
+        background-color: #4CAF50;
+      }
+
+      .chat-buttons a.chat-button-help:hover {
+        background-color: #1B7F1F;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <div class="chat">
+          <div class="chat-history" ref="chatHistory">
+            <div class="message" v-for="(message, index) in messages" :key="index" :class="{ 'message-left': message.role === 'assistant', 'message-right': message.role === 'user' }">
+              <div class="message-text">{{ message.content }}</div>
+              <div class="delete-button" @click="deleteMessage(index)">x</div>
+            </div>
+          </div>
+          <div class="chat-input">
+            <input type="text" autofocus  v-model="newMessage" @keyup.enter="sendMessage" :placeholder="sending?'等待中...':'请输入内容，按回车发送'" :disabled="sending" />
+            <div class="chat-buttons">
+
+    <input type=button value=中断 @click="abort" v-if="messages.length>0" :disabled=failed||!sending />
+    <input type=button value=重试 @click="retry" v-if="messages.length>0" :disabled=!failed />
+    <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
+
+    <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
+    <a :href="'?'+(new Date().getTime()+1)" v-if="messages.length>0" >新对话</a>
+              <a href="https://github.com/w2404/chat-doc" >帮助教程</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="lib/k.js"></script>
+  </body>
+</html>
