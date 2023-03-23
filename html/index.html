@@ -120,6 +120,10 @@
               <div class="delete-button" @click="deleteMessage(index)">x</div>
             </div>
           </div>
+
+    <div >{{usage}}</div>
+    <div v-html="error"></div>
+
           <div class="chat-input">
             <input type="text" autofocus  v-model="newMessage" @keyup.enter="sendMessage" :placeholder="sending?'等待中...':'请输入内容，按回车发送'" :disabled="sending" />
             <div class="chat-buttons">

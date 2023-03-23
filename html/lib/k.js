@@ -105,10 +105,12 @@ const app = createApp({
                     "messages": this.messages,
                     "temperature": 0.7
                 }),
+                /*
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + key
                 },
+                */
                 success: data => {
                     this.error = ''
                     this.sending = false
