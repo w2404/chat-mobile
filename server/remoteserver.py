@@ -5,7 +5,7 @@ import json
 import config
 import sys
 
-PORT = sys.argv[1]
+PORT = int(sys.argv[1])
 
 def send(post_data):
     headers = {"Authorization": "Bearer " + config.key, "Content-Type": "application/json"}
