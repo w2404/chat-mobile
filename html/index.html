@@ -106,30 +106,8 @@
       }
 
       .chat-buttons button,
-      .chat-buttons a {
-        display: inline-block;
-        padding: 10px 20px;
-        border-radius: 20px;
-        border: none;
-        background-color: #007aff;
-        color: #fff;
-        cursor: pointer;
-        margin-bottom: 10px; /* 在按钮下方添加一定的间距 */
-        text-decoration: none; /* 去除默认的下划线 */
-      }
 
       .chat-buttons button:hover,
-      .chat-buttons a:hover {
-        background-color: #0047b3;
-      }
-
-      .chat-buttons a.chat-button-help {
-        background-color: #4CAF50;
-      }
-
-      .chat-buttons a.chat-button-help:hover {
-        background-color: #1B7F1F;
-      }
     </style>
   </head>
   <body>
@@ -151,7 +129,9 @@
     <input type=button value=撤回 @click="withdraw" v-if="messages.length>0" :disabled=!failed />
 
     <a :href="'?'+new Date().getTime() " v-if="messages.length>0" >清空</a>
+    -
     <a :href="'?'+(new Date().getTime()+1)" v-if="messages.length>0" >新对话</a>
+    -
               <a href="https://github.com/w2404/chat-doc" >帮助教程</a>
             </div>
           </div>
