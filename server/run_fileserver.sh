@@ -1,2 +1,2 @@
 cd ../html
-nohup sudo python ../server/fileserver.py ../server/server.pem > ../log.txt 2>&1 &
+nohup sudo python -m http.server 8443 > ../log.txt 2>&1 &

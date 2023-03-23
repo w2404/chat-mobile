@@ -3,8 +3,9 @@ import socketserver
 import requests
 import json
 import config
+import sys
 
-PORT = 8445
+PORT = sys.argv[1]
 
 def send(post_data):
     headers = {"Authorization": "Bearer " + config.key, "Content-Type": "application/json"}
